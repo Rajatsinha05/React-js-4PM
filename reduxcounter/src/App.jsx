@@ -1,17 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decrease, increase, reset } from "./redux/Action";
+import Navbar from "./components/Navbar";
+import AllRoutes from "./Routes/AllRoutes";
 
 const App = () => {
-  let data = useSelector((store) => store);
+  // let data = useSelector((store) => store.user);
+  // console.log(data);
 
   const dispatch = useDispatch();
   return (
     <div>
-      <h1>count : {data.count}</h1>
-      <button onClick={()=>dispatch(increase())}>+</button>
-      <button onClick={()=>dispatch(decrease())}>-</button>
-      <button onClick={()=>dispatch(reset())}>reset</button>
+      <Navbar />
+      <AllRoutes />
     </div>
   );
 };
