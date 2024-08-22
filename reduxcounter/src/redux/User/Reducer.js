@@ -1,4 +1,4 @@
-import { LOGOUT, SIGNUP } from "./ActionType";
+import { LOGIN, LOGOUT, SIGNUP } from "./ActionType";
 
 let initialState = {
     users: [],
@@ -15,6 +15,16 @@ export const UserReucer = (state = initialState, { type, payload }) => {
 
         case LOGOUT:
             return { ...state, user: {}, isLogin: false }
+
+        case LOGIN:
+            let Founduser = state.users.find(ele => ele.email === payload.email && ele.password === payload.password)
+
+            if (Founduser) {
+                return { ...state, isLogin: true, user: Founduser }
+            }
+            else {
+                return state
+            }
 
         default:
             return state

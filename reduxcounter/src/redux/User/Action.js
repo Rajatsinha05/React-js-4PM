@@ -1,9 +1,6 @@
 import { LOGIN, LOGOUT, SIGNUP } from "./ActionType"
 
 export const createUser = (user) => {
-
- 
-    
     return {
         type: SIGNUP,
         payload: user
