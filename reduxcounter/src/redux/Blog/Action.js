@@ -14,10 +14,10 @@ export const deleteBlog = (id) => {
   };
 };
 
-export const updateBlog = ( blog) => {
+export const updateBlog = (blog) => {
   return {
     type: UPDATE_BLOG,
-    payload:blog
+    payload: blog
   };
 };
 
@@ -28,3 +28,4 @@ export const singleBlog = (id) => {
     payload: id,
   }
 }
+
