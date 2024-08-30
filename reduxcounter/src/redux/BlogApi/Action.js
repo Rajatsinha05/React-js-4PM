@@ -2,16 +2,15 @@ import axios from "axios";
 import { CREATE_BLOG, FETCH_BLOG, GET_BLOGS } from "./ActionType";
 
 export const getBlogs = () => async (dispatch) => {
-  dispatch({
-    type: FETCH_BLOG,
-  });
+
+  console.log("getBlogs");
+
 
   try {
     let blogs = await axios.get("http://localhost:3000/blogs");
-    dispatch({
-      type: GET_BLOGS,
-      payload: blogs.data,
-    });
+    dispatch(getBlogData(blogs.data));
+    console.log(blogs.data);
+
   } catch (error) {
     console.log(error);
   }
@@ -32,3 +31,14 @@ export const postBlogs = (blog) => async (dispatch) => {
     console.log(error);
   }
 };
+
+
+export const getBlogData = (blogs) => {
+
+  console.log("blogs",blogs);
+
+  return {
+    type: GET_BLOGS,
+    payload: blogs
+  }
+}

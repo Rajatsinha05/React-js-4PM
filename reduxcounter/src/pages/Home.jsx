@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteBlog, updateBlog } from "../redux/Blog/Action";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import '../Css/Home.css'; // Import the CSS file
+import "../Css/Home.css"; // Import the CSS file
+import { getBlogData, getBlogs } from "../redux/BlogApi/Action";
+import axios from "axios";
 
 const Home = () => {
   const [show, setShow] = useState(false);
@@ -13,7 +15,7 @@ const Home = () => {
   let [img, setImg] = useState("");
   let [id, setId] = useState("");
   let [content, setContent] = useState("");
-  
+
   const handleClose = () => {
     setShow(false);
     let blogData = {
@@ -24,7 +26,7 @@ const Home = () => {
     };
     dispatch(updateBlog(blogData));
   };
-  
+
   const handleShow = (ele) => {
     setContent(ele.content);
     setTitle(ele.title);
@@ -36,11 +38,19 @@ const Home = () => {
   let { blogs } = useSelector((store) => store.blogs);
   console.log(blogs);
   const dispatch = useDispatch();
-  
+
   const handleDelete = (id) => {
     dispatch(deleteBlog(id));
   };
-  
+  const getData = async () => {
+    let blogs = await axios.get("http://localhost:3000/blogs")
+    dispatch(getBlogData(blogs.data))
+  }
+
+  useEffect(() => {
+    getData()
+  }, []);
+
   return (
     <div className="container">
       <Modal show={show} onHide={handleClose}>
