@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createBlog } from "../redux/Blog/Action";
 import '../Css/AddBlog.css'; // Import the CSS file
+import { postBlogs } from "../redux/BlogApi/Action";
 
 const AddBlog = () => {
   let [title, setTitle] = useState("");
@@ -15,10 +16,10 @@ const AddBlog = () => {
       title,
       img,
       content,
-      id: Date.now(),
     };
 
-    dispatch(createBlog(blog));
+    // dispatch(createBlog(blog));
+    dispatch(postBlogs(blog));
     setTitle("");
     setImg("");
     setContent("");

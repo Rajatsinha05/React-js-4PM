@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, legacy_createStore } from "redux";
+import { applyMiddleware, combineReducers, compose, legacy_createStore } from "redux";
 import { reducer } from "./Reducer";
 import { UserReucer } from "./User/Reducer";
 import { BlogReducer } from "./Blog/BlogReducer";
@@ -11,5 +11,6 @@ const combineAllReducers = combineReducers({
     blogApi: BlogReducerApi
 
 })
+const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-export const Store = legacy_createStore(combineAllReducers,applyMiddleware[thunk], window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+export const Store = legacy_createStore(combineAllReducers, composeEnhancers(applyMiddleware(thunk)))

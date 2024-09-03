@@ -1,9 +1,11 @@
 import axios from "axios";
-import { CREATE_BLOG, FETCH_BLOG, GET_BLOGS } from "./ActionType";
+import { CREATE_BLOG, DELETE_BLOG, FETCH_BLOG, GET_BLOGS } from "./ActionType";
 
 export const getBlogs = () => async (dispatch) => {
 
-  console.log("getBlogs");
+  dispatch({
+    type: FETCH_BLOG
+  })
 
 
   try {
@@ -33,9 +35,33 @@ export const postBlogs = (blog) => async (dispatch) => {
 };
 
 
+
+export const deleteBlogbyId = (id) => async (dispatch) => {
+  dispatch({
+    type: FETCH_BLOG,
+
+  })
+
+
+  try {
+
+    let blogs = await axios.delete(`http://localhost:3000/blogs/${id}`);
+
+    dispatch({
+      type: DELETE_BLOG,
+      payload: id
+    })
+
+
+  } catch (error) {
+
+  }
+}
+
+
 export const getBlogData = (blogs) => {
 
-  console.log("blogs",blogs);
+
 
   return {
     type: GET_BLOGS,

@@ -13,8 +13,8 @@ const initialState = {
   isLoading: false,
 };
 
-export const BlogReducerApi = (state = initialState, { action, payload }) => {
-  switch (action) {
+export const BlogReducerApi = (state = initialState, { type, payload }) => {
+  switch (type) {
     case GET_BLOGS:
       return { ...state, blogs: payload, isLoading: false };
 

@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import "../Css/Home.css"; // Import the CSS file
-import { getBlogData, getBlogs } from "../redux/BlogApi/Action";
+import { deleteBlogbyId, getBlogData, getBlogs } from "../redux/BlogApi/Action";
 import axios from "axios";
 
 const Home = () => {
@@ -35,24 +35,28 @@ const Home = () => {
     setId(ele.id);
   };
 
-  let { blogs } = useSelector((store) => store.blogs);
-  console.log(blogs);
+  // let { blogs } = useSelector((store) => store.blogs);
+  // console.log(blogs);
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
-    dispatch(deleteBlog(id));
+    dispatch(deleteBlogbyId(id));
   };
-  const getData = async () => {
-    let blogs = await axios.get("http://localhost:3000/blogs")
-    dispatch(getBlogData(blogs.data))
-  }
 
   useEffect(() => {
-    getData()
+ dispatch(getBlogs())
   }, []);
 
+  let data=useSelector((store) => store.blogApi);
+console.log("data",data);
+
+  
   return (
     <div className="container">
+   
+   {data.isLoading ? <h1>Loading.......</h1> :
+   
+   <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update Blog</Modal.Title>
@@ -97,7 +101,7 @@ const Home = () => {
         </Modal.Footer>
       </Modal>
       <div className="blog-grid">
-        {blogs.map((ele) => (
+        {data.blogs.map((ele) => (
           <div key={ele.id} className="blog-item">
             <h1 className="blog-title">{ele.title}</h1>
             <img src={ele.img} alt={ele.title} />
@@ -111,6 +115,13 @@ const Home = () => {
           </div>
         ))}
       </div>
+   </>
+   
+   }
+
+
+
+   
     </div>
   );
 };
