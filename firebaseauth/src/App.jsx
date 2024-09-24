@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GoogleAuth, LoggedInWithEmail, SignupWithEmail } from "./config";
+import Form from "./Form";
 
 const App = () => {
   let [userData, setUserData] = useState({ email: "", password: "" });
@@ -28,8 +29,8 @@ const App = () => {
   };
   return (
     <div>
-      <h1>Signup</h1>
-      <form onSubmit={handleSubmit}>
+      {/* <h1>Signup</h1> */}
+      {/* <form onSubmit={handleSubmit}>
         <input
           type="email"
           value={userData.email}
@@ -43,7 +44,8 @@ const App = () => {
           onChange={handleInput}
         />
         <input type="submit" value="login"/>
-      </form>
+      </form> */}
+      <Form/>
       <button onClick={signupWithGoogle}>Google</button>
     </div>
   );
