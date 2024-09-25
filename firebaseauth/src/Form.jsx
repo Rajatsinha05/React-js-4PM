@@ -1,4 +1,11 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "./config";
 
@@ -19,14 +26,26 @@ const Form = () => {
 
   const getProducts = async () => {
     let productsref = await getDocs(collection(db, "products"));
-    productsref.docs.map((doc) => {
-      setProductList([...productList, { id: doc.id, ...doc.data() }]);
-    });
+    let proData = productsref.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    setProductList(proData);
   };
 
+  const handleDelete = async (id) => {
+    let userDoc = doc(db, "products", id);
+    await deleteDoc(userDoc);
+  };
+  const handleUpdate = async (id) => {
+    let userDoc = doc(db, "products", id);
+
+    await updateDoc(userDoc, product);
+  };
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [handleDelete, handleSubmit, handleUpdate]);
 
   return (
     <div>
@@ -57,6 +76,8 @@ const Form = () => {
           {console.log(user)}
           <img src={user.img} alt="" />
           <h1>{user.title}</h1>
+          <button onClick={() => handleDelete(user.id)}>Delete</button>
+          <button onClick={() => handleUpdate(user.id)}>update</button>
         </>
       ))}
     </div>
